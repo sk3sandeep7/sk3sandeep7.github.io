@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sandeep Kumar — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f4f8fc;
+      --white: #ffffff;
+      --blue-light: #ddeeff;
+      --blue-mid: #b8d9f5;
+      --blue: #5aa0d8;
+      --blue-dark: #2d6fa8;
+      --navy: #1a3a5c;
+      --text: #1a2a3a;
+      --muted: #6a859e;
+      --border: #cce0f0;
+      --accent: #e8f4fd;
+      --green: #2ecc9a;
+      --mono: 'DM Mono', monospace;
+      --display: 'Playfair Display', serif;
+      --body: 'DM Sans', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #b8d9f580 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue-dark); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 48px;
+      align-items: center;
+      padding: 120px 56px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--blue-dark);
+      background: var(--blue-light);
+      border: 1px solid var(--blue-mid);
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--green);
+    }
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(48px, 6vw, 78px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      color: var(--navy);
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+    .hero-role {
+      font-family: var(--display);
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.3s;
+    }
+    .hero-bio {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.4s;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+    .btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      padding: 13px 26px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.22s;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: #fff;
+      border: 1.5px solid var(--navy);
+    }
+    .btn-primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue-dark); background: var(--blue-light); }
+
+    /* HERO CARD */
+    .hero-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 8px 40px rgba(90,160,216,0.12);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+    .hero-card-avatar {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--blue-mid), var(--blue));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display);
+      font-size: 28px; font-weight: 800; color: white;
+      margin-bottom: 20px;
+    }
+    .hero-card h3 { font-family: var(--display); font-size: 20px; color: var(--navy); margin-bottom: 6px; }
+    .hero-card-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+    .metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .metric {
+      background: var(--accent);
+      border: 1px solid var(--blue-light);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .metric-val { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--blue-dark); line-height: 1; }
+    .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; font-family: var(--mono); letter-spacing: 0.5px; }
+    .hero-card-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--blue-dark); background: var(--blue-light);
+      border: 1px solid var(--blue-mid);
+      padding: 5px 12px; border-radius: 4px; letter-spacing: 0.5px;
+    }
+
+    /* SECTIONS */
+    .section-wrap {
+      position: relative; z-index: 2;
+      padding: 80px 56px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+    .section-num { font-family: var(--mono); font-size: 12px; color: var(--blue); letter-spacing: 2px; }
+    .section-title { font-family: var(--display); font-size: 36px; font-weight: 800; color: var(--navy); letter-spacing: -1px; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--blue-mid), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 36px; }
+    .timeline-item::before {
+      content: ''; position: absolute;
+      left: -36px; top: 8px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 2px solid var(--white);
+      box-shadow: 0 0 0 3px var(--blue-light);
+    }
+    .timeline-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      transition: box-shadow 0.2s;
+    }
+    .timeline-card:hover { box-shadow: 0 6px 24px rgba(90,160,216,0.13); }
+    .tc-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 6px;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .tc-role { font-size: 17px; font-weight: 600; color: var(--navy); }
+    .tc-date {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--blue); background: var(--blue-light);
+      padding: 4px 12px; border-radius: 20px;
+      letter-spacing: 0.5px; white-space: nowrap;
+    }
+    .tc-company { font-size: 14px; color: var(--blue-dark); font-weight: 500; margin-bottom: 14px; }
+    .tc-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .tc-bullets li {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.6; padding-left: 16px; position: relative;
+    }
+    .tc-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--blue); font-size: 12px; }
+    .tc-impact {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: 11px;
+      color: var(--green);
+      background: rgba(46,204,154,0.08);
+      border: 1px solid rgba(46,204,154,0.25);
+      padding: 4px 12px; border-radius: 4px; margin-top: 12px; letter-spacing: 0.5px;
+    }
+
+    /* REPOS */
+    .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+    .repo-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 28px;
+      transition: all 0.25s; text-decoration: none; display: block;
+      position: relative; overflow: hidden;
+    }
+    .repo-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue-mid), var(--blue));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .repo-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(90,160,216,0.15); border-color: var(--blue-mid); }
+    .repo-card:hover::after { transform: scaleX(1); }
+    .repo-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .repo-icon { width: 40px; height: 40px; background: var(--blue-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .repo-icon svg { width: 20px; height: 20px; stroke: var(--blue-dark); fill: none; stroke-width: 1.5; }
+    .repo-badge { font-family: var(--mono); font-size: 10px; color: var(--green); border: 1px solid rgba(46,204,154,0.3); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; }
+    .repo-name { font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+    .repo-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; min-height: 44px; }
+    .repo-footer { display: flex; align-items: center; gap: 10px; }
+    .repo-lang { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .lang-dot { width: 10px; height: 10px; border-radius: 50%; background: #3572A5; }
+    .repo-arrow { margin-left: auto; color: var(--blue-mid); font-size: 18px; transition: color 0.2s, transform 0.2s; }
+    .repo-card:hover .repo-arrow { color: var(--blue-dark); transform: translateX(4px); }
+
+    /* EDUCATION */
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .edu-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .edu-icon { font-size: 28px; margin-bottom: 16px; }
+    .edu-school { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .edu-degree { font-size: 14px; color: var(--blue-dark); margin-bottom: 6px; }
+    .edu-year { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+    .edu-badge { display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 10px; color: var(--blue-dark); background: var(--blue-light); border: 1px solid var(--blue-mid); padding: 4px 12px; border-radius: 4px; }
+
+    /* CONTACT */
+    .contact-wrap {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 56px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 56px; align-items: start;
+      box-shadow: 0 4px 32px rgba(90,160,216,0.08);
+    }
+    .contact-title { font-family: var(--display); font-size: 38px; font-weight: 800; color: var(--navy); letter-spacing: -1px; margin-bottom: 14px; line-height: 1.1; }
+    .contact-sub { color: var(--muted); line-height: 1.7; margin-bottom: 32px; font-size: 15px; }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none; color: var(--text);
+      font-family: var(--mono); font-size: 13px;
+      padding: 15px 18px;
+      background: var(--accent); border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s; letter-spacing: 0.3px;
+    }
+    .contact-link:hover { border-color: var(--blue); color: var(--blue-dark); background: var(--blue-light); }
+    .contact-link svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; flex-shrink: 0; }
+    .skills-panel { background: var(--accent); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+    .skills-panel-title { font-family: var(--mono); font-size: 11px; color: var(--blue); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+    .skill-group { margin-bottom: 20px; }
+    .skill-group-name { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag { font-family: var(--mono); font-size: 11px; padding: 5px 12px; background: var(--white); border: 1px solid var(--border); border-radius: 4px; color: var(--blue-dark); letter-spacing: 0.5px; }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 2;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      padding: 28px 56px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .footer-text a { color: var(--blue-dark); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 40px; }
+      .hero-card { display: none; }
+      .section-wrap { padding: 60px 24px; }
+      .contact-wrap { grid-template-columns: 1fr; padding: 32px 24px; gap: 32px; }
+      footer { flex-direction: column; gap: 10px; padding: 20px 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Sandeep<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div style="position:relative; z-index:2; background: linear-gradient(180deg, #ddeeff 0%, #f4f8fc 100%);">
+    <div class="hero">
+      <div>
+        <div class="hero-tag">Open to Product Manager Roles</div>
+        <h1>Sandeep<br>Kumar</h1>
+        <div class="hero-role">UW Foster MBA '27 · Ex-SanDisk</div>
+        <p class="hero-bio">
+          Technology leader with 7 years driving product strategy across automotive, IoT,
+          and mobile storage — generating $300M+ in combined revenue impact.
+          Dean's Merit Scholar at UW Foster School of Business, Seattle.
+        </p>
+        <div class="hero-actions">
+          <a href="#experience" class="btn btn-primary">View Experience</a>
+          <a href="https://linkedin.com/in/sandeepkr3" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-avatar">SK</div>
+        <h3>Sandeep Kumar</h3>
+        <div class="hero-card-sub">UW Foster MBA Candidate '27<br>Dean's Merit Scholar · Seattle, WA</div>
+        <div class="metric-row">
+          <div class="metric">
+            <div class="metric-val">$300M+</div>
+            <div class="metric-label">Revenue Impact</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">7 Yrs</div>
+            <div class="metric-label">Experience</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">4</div>
+            <div class="metric-label">Patents Filed</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">6</div>
+            <div class="metric-label">Global Regions</div>
+          </div>
+        </div>
+        <div class="hero-card-badges">
+          <span class="badge">Product Strategy</span>
+          <span class="badge">NLP / AI</span>
+          <span class="badge">Automotive</span>
+          <span class="badge">IoT</span>
+          <span class="badge">ASPICE CL3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="section-wrap" id="experience">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="tc-top">
+            <div class="tc-role">Technical Product Manager</div>
+            <span class="tc-date">Mar 2024 – Aug 2025</span>
+          </div>
+          <div class="tc-company">SanDisk (Western Digital) · Bengaluru</div>
+          <ul class="tc-bullets">
+            <li>Owned end-to-end product roadmap for a data reliability storage product for automotive clients; led full PDLC from requirements through launch across 6 global regions.</li>
+            <li>Deployed a local LLM-powered automation tool for traceability across MRDs, PRDs, and downstream artifacts — delivering the industry's first ASPICE CL3 safety certification.</li>
+            <li>Built and led a 5-member IP committee producing 4 patents and 2 trade secrets through a structured IP roadmap.</li>
+          </ul>
+          <div class="tc-impact">$140M ARR · ASPICE CL3 · 4 Patents</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="tc-top">
+            <div class="tc-role">Staff Firmware Engineer</div>
+            <span class="tc-date">Jul 2022 – Feb 2024</span>
+          </div>
+          <div class="tc-company">SanDisk (Western Digital) · Bengaluru</div>
+          <ul class="tc-bullets">
+            <li>Drove a firmware-level workaround strategy to overcome hardware constraints, enabling $35M in revenue from automotive clients by accelerating time-to-market.</li>
+            <li>Captured $50M in new market opportunity by identifying unmet IoT privacy needs and leading a security-focused feature rollout.</li>
+            <li>Reduced international handover time by 30% through a gap analysis and mentoring framework for global teams.</li>
+          </ul>
+          <div class="tc-impact">$85M Revenue · 30% Efficiency Gain</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="tc-top">
+            <div class="tc-role">Senior Systems Design Engineer</div>
+            <span class="tc-date">Aug 2021 – Jun 2022</span>
+          </div>
+          <div class="tc-company">SanDisk (Western Digital) · Bengaluru</div>
+          <ul class="tc-bullets">
+            <li>Conceptualized a validation platform with data visualization dashboards, improving code coverage by 12% and reducing internal defects.</li>
+            <li>Led end-to-end validation for a fast-boot automotive feature, meeting rigorous quality gates to secure $45M in revenue.</li>
+            <li>Resolved performance thrashing via 1,000+ system trace analyses, achieving a 5% improvement in sustained write speeds.</li>
+          </ul>
+          <div class="tc-impact">$45M Revenue · 12% Coverage Improvement</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="tc-top">
+            <div class="tc-role">Systems Design Engineer</div>
+            <span class="tc-date">Jul 2018 – Jul 2021</span>
+          </div>
+          <div class="tc-company">SanDisk (Western Digital) · Bengaluru</div>
+          <ul class="tc-bullets">
+            <li>Improved CX metrics by 14% by synthesizing customer pain points to redesign internal replication systems mirroring real-world data flows.</li>
+            <li>Mitigated $25M in financial risk by coordinating a rapid-response patch with engineering partners in Israel and South Korea.</li>
+            <li>Led a 3-member team designing virtual engagement initiatives for 150+ employees, boosting satisfaction during remote transitions.</li>
+          </ul>
+          <div class="tc-impact">14% CX Improvement · $25M Risk Mitigated</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div style="background: linear-gradient(180deg, transparent, #ddeeff 40%, transparent); position:relative; z-index:2;">
+    <div class="section-wrap" id="projects">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">GitHub Projects</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="repos-grid">
+
+        <a class="repo-card" href="https://github.com/sandeepkr3/Twitter-Sentiment-Analyzer" target="_blank">
+          <div class="repo-card-top">
+            <div class="repo-icon"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+            <span class="repo-badge">Public</span>
+          </div>
+          <div class="repo-name">Twitter-Sentiment-Analyzer</div>
+          <div class="repo-desc">Collects tweets and applies a Naive Bayes classifier to categorize them as positive, negative, or neutral using NLP techniques.</div>
+          <div class="repo-footer">
+            <span class="repo-lang"><span class="lang-dot"></span>Python</span>
+            <span class="repo-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="repo-card" href="https://github.com/sandeepkr3/DenoiseDirtyDoc" target="_blank">
+          <div class="repo-card-top">
+            <div class="repo-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <span class="repo-badge">Public</span>
+          </div>
+          <div class="repo-name">DenoiseDirtyDoc</div>
+          <div class="repo-desc">Image processing pipeline to clean and denoise scanned or photographed dirty documents using computer vision techniques.</div>
+          <div class="repo-footer">
+            <span class="repo-lang"><span class="lang-dot"></span>Python</span>
+            <span class="repo-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="repo-card" href="https://github.com/sandeepkr3/CommentAbuseClassify" target="_blank">
+          <div class="repo-card-top">
+            <div class="repo-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <span class="repo-badge">Public</span>
+          </div>
+          <div class="repo-name">CommentAbuseClassify</div>
+          <div class="repo-desc">ML model to identify and classify toxic or abusive online comments, applying text classification and NLP research methods.</div>
+          <div class="repo-footer">
+            <span class="repo-lang"><span class="lang-dot"></span>Python</span>
+            <span class="repo-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="repo-card" href="https://github.com/sandeepkr3/HackTheAIProject" target="_blank">
+          <div class="repo-card-top">
+            <div class="repo-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <span class="repo-badge">Public</span>
+          </div>
+          <div class="repo-name">HackTheAIProject</div>
+          <div class="repo-desc">A command-line based game blending interactive storytelling with AI mechanics for an engaging terminal experience.</div>
+          <div class="repo-footer">
+            <span class="repo-lang"><span class="lang-dot"></span>Python</span>
+            <span class="repo-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="repo-card" href="https://github.com/sandeepkr3/DjangoSite" target="_blank">
+          <div class="repo-card-top">
+            <div class="repo-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+            <span class="repo-badge">Public</span>
+          </div>
+          <div class="repo-name">DjangoSite</div>
+          <div class="repo-desc">Full-stack web application built with Django, demonstrating MVC architecture and Python-backed web development.</div>
+          <div class="repo-footer">
+            <span class="repo-lang"><span class="lang-dot"></span>Python</span>
+            <span class="repo-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="repo-card" href="https://github.com/sandeepkr3/Hello-world" target="_blank">
+          <div class="repo-card-top">
+            <div class="repo-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <span class="repo-badge">Public</span>
+          </div>
+          <div class="repo-name">Hello-world</div>
+          <div class="repo-desc">First repository — the origin of a growing portfolio spanning NLP, computer vision, and full-stack development.</div>
+          <div class="repo-footer">
+            <span class="repo-lang"><span class="lang-dot"></span>Python</span>
+            <span class="repo-arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section-wrap" id="education">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Education</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-school">UW Foster School of Business</div>
+        <div class="edu-degree">Master of Business Administration (MBA)</div>
+        <div class="edu-year">Aug 2025 – Aug 2027 · Seattle, WA</div>
+        <span class="edu-badge">Dean's Merit Scholar</span>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">🖥️</div>
+        <div class="edu-school">Delhi Technological University (DTU)</div>
+        <div class="edu-degree">B.Tech, Computer Science</div>
+        <div class="edu-year">2014 – 2018 · Delhi, India</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📚</div>
+        <div class="edu-school">AVB Public School</div>
+        <div class="edu-degree">High School — Science</div>
+        <div class="edu-year">2008 – 2014</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-wrap" id="contact">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-wrap">
+      <div>
+        <div class="contact-title">Let's connect<br>& build.</div>
+        <p class="contact-sub">Actively seeking Product Manager roles. Open to full-time opportunities, consulting, and collaborations in tech, automotive, or AI-adjacent domains.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:sk3.sandeep7@gmail.com">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            sk3.sandeep7@gmail.com
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/sandeepkr3" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/sandeepkr3
+          </a>
+          <a class="contact-link" href="https://github.com/sandeepkr3" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            github.com/sandeepkr3
+          </a>
+        </div>
+      </div>
+      <div class="skills-panel">
+        <div class="skills-panel-title">// Skills & Expertise</div>
+        <div class="skill-group">
+          <div class="skill-group-name">Product & Strategy</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Product Roadmap</span>
+            <span class="skill-tag">PDLC</span>
+            <span class="skill-tag">Go-to-Market</span>
+            <span class="skill-tag">Cross-functional Leadership</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Technical</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Firmware</span>
+            <span class="skill-tag">Systems Design</span>
+            <span class="skill-tag">NLP / AI</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Django</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Domains</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Automotive</span>
+            <span class="skill-tag">IoT</span>
+            <span class="skill-tag">Data Storage</span>
+            <span class="skill-tag">ASPICE</span>
+          </div>
+        </div>
+        <div class="skill-group" style="margin-bottom:0">
+          <div class="skill-group-name">Languages</div>
+          <div class="skill-tags">
+            <span class="skill-tag">English (Professional)</span>
+            <span class="skill-tag">Hindi (Native)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-text">© 2025 Sandeep Kumar · Seattle, WA</div>
+    <div class="footer-text"><a href="mailto:sk3.sandeep7@gmail.com">sk3.sandeep7@gmail.com</a></div>
+  </footer>
+
+</body>
+</html>
